@@ -15,6 +15,8 @@
 		003607752A02673F00D1B685 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 003607732A02673F00D1B685 /* LaunchScreen.storyboard */; };
 		0036079D2A067F5F00D1B685 /* ImagesListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0036079C2A067F5F00D1B685 /* ImagesListCell.swift */; };
 		003607A02A084DBE00D1B685 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 0036079F2A084DBE00D1B685 /* .gitignore */; };
+		003607A22A0BBB2A00D1B685 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 003607A12A0BBB2A00D1B685 /* ProfileViewController.swift */; };
+		0078FA652A0BF7CC00B9E52F /* SingleImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0078FA642A0BF7CC00B9E52F /* SingleImageViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +30,8 @@
 		003607762A02673F00D1B685 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0036079C2A067F5F00D1B685 /* ImagesListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesListCell.swift; sourceTree = "<group>"; };
 		0036079F2A084DBE00D1B685 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		003607A12A0BBB2A00D1B685 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		0078FA642A0BF7CC00B9E52F /* SingleImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleImageViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +67,8 @@
 			children = (
 				003607682A02673E00D1B685 /* AppDelegate.swift */,
 				0036076A2A02673E00D1B685 /* SceneDelegate.swift */,
+				003607A12A0BBB2A00D1B685 /* ProfileViewController.swift */,
+				0078FA642A0BF7CC00B9E52F /* SingleImageViewController.swift */,
 				0036079E2A067F9600D1B685 /* ImagesList */,
 				0036076E2A02673E00D1B685 /* Main.storyboard */,
 				003607712A02673F00D1B685 /* Assets.xcassets */,
@@ -155,7 +161,9 @@
 			files = (
 				0036076D2A02673E00D1B685 /* ImagesListViewController.swift in Sources */,
 				0036079D2A067F5F00D1B685 /* ImagesListCell.swift in Sources */,
+				003607A22A0BBB2A00D1B685 /* ProfileViewController.swift in Sources */,
 				003607692A02673E00D1B685 /* AppDelegate.swift in Sources */,
+				0078FA652A0BF7CC00B9E52F /* SingleImageViewController.swift in Sources */,
 				0036076B2A02673E00D1B685 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
