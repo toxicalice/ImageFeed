@@ -9,18 +9,12 @@ import UIKit
 
 class ImagesListViewController: UIViewController {
     
-    @IBOutlet private var tableView: UITableView!
+    @IBOutlet private weak var tableView: UITableView!
     
     private let photosName: [String] = Array(0..<20).map{ "\($0)" }
     
     private let ShowSingleImageSegueIdentifier = "ShowSingleImage"
 
-    private lazy var dateFormatter: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateStyle = .long
-        formatter.timeStyle = .none
-        return formatter
-    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -56,24 +50,12 @@ extension ImagesListViewController: UITableViewDataSource {
             return UITableViewCell()
         }
 
-        configCell(for: imageListCell, with: indexPath)
+        imageListCell.configCell(photoName: photosName[indexPath.row], with: indexPath)
         
         return imageListCell
     }
     
-    func configCell(for cell: ImagesListCell, with indexPath: IndexPath) {
-        cell.dataLabel.text = dateFormatter.string(from: Date())
-
-        let photoName = photosName[indexPath.row]
-        guard let image = UIImage(named: photoName) else { return }
-        cell.backgroundImageView.image = image
-        
-        if indexPath.row % 2 == 0 {
-            cell.likeButton.imageView?.image = UIImage(named: "Like")
-        } else {
-            cell.likeButton.imageView?.image = UIImage(named: "Unlike")
-        }
-    }
+    
 }
 
 extension ImagesListViewController: UITableViewDelegate {
