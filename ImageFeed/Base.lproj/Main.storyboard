@@ -48,7 +48,7 @@
                                 <rect key="frame" x="0.0" y="44" width="414" height="769"/>
                                 <color key="backgroundColor" name="YP Black "/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ImagesListCell" rowHeight="220" id="ZSh-Is-m1C" customClass="ImagesListCell" customModule="ImageFeed" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ImagesListCell" rowHeight="220" id="ZSh-Is-m1C" customClass="ImagesListCell" customModule="ImageFeed" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="44.5" width="414" height="220"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ZSh-Is-m1C" id="dPA-Xl-zT3">
@@ -70,8 +70,8 @@
                                                     <buttonConfiguration key="configuration" style="plain" image="Like" title=""/>
                                                 </button>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="27 августа 2022" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i4H-gt-75g">
-                                                    <rect key="frame" x="32" y="179" width="128" height="21"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <rect key="frame" x="32" y="184" width="101.5" height="16"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -107,7 +107,7 @@
                             <constraint firstItem="UzK-gQ-sc4" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="aGc-Pb-ibh"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Item" image="tab_editorial_active" id="Zlo-WZ-jeu"/>
+                    <tabBarItem key="tabBarItem" title="" image="tab_editorial_active" id="Zlo-WZ-jeu"/>
                     <navigationItem key="navigationItem" id="3aK-k6-tgM"/>
                     <connections>
                         <outlet property="tableView" destination="UzK-gQ-sc4" id="bhu-O7-dOu"/>
@@ -172,14 +172,14 @@
                         <viewLayoutGuide key="safeArea" id="Wdg-Dy-i7q"/>
                         <color key="backgroundColor" name="YP Black "/>
                         <constraints>
-                            <constraint firstItem="Vlo-Uz-RPj" firstAttribute="centerY" secondItem="Wdg-Dy-i7q" secondAttribute="centerY" id="4BT-qY-goY"/>
+                            <constraint firstAttribute="trailing" secondItem="Vlo-Uz-RPj" secondAttribute="trailing" id="5se-oy-PPH"/>
                             <constraint firstItem="MCE-e0-cj6" firstAttribute="leading" secondItem="Ne1-2S-AY8" secondAttribute="leadingMargin" constant="4" id="COx-VO-c7t"/>
-                            <constraint firstItem="Vlo-Uz-RPj" firstAttribute="centerX" secondItem="Wdg-Dy-i7q" secondAttribute="centerX" id="Cjf-hP-6f5"/>
+                            <constraint firstItem="Vlo-Uz-RPj" firstAttribute="top" secondItem="Ne1-2S-AY8" secondAttribute="top" id="CcD-8m-jwy"/>
                             <constraint firstItem="MCE-e0-cj6" firstAttribute="top" secondItem="Ne1-2S-AY8" secondAttribute="topMargin" constant="8" id="L4p-lB-QgQ"/>
                             <constraint firstItem="Wdg-Dy-i7q" firstAttribute="bottom" secondItem="VuI-eP-iUR" secondAttribute="bottom" constant="38" id="MGd-bJ-hhl"/>
-                            <constraint firstItem="Vlo-Uz-RPj" firstAttribute="width" secondItem="Ne1-2S-AY8" secondAttribute="width" id="wUm-Hz-TyB"/>
-                            <constraint firstItem="Vlo-Uz-RPj" firstAttribute="height" secondItem="Ne1-2S-AY8" secondAttribute="height" id="yoI-M0-SzA"/>
+                            <constraint firstAttribute="bottom" secondItem="Vlo-Uz-RPj" secondAttribute="bottom" id="sqW-do-2sP"/>
                             <constraint firstItem="VuI-eP-iUR" firstAttribute="centerX" secondItem="Ne1-2S-AY8" secondAttribute="centerX" id="zu9-zj-5qZ"/>
+                            <constraint firstItem="Vlo-Uz-RPj" firstAttribute="leading" secondItem="Ne1-2S-AY8" secondAttribute="leading" id="zwd-9B-yik"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="wjG-4l-WYr"/>
@@ -192,7 +192,7 @@
             </objects>
             <point key="canvasLocation" x="1559.5419847328244" y="-114.08450704225352"/>
         </scene>
-        <!--Item-->
+        <!--Profile View Controller-->
         <scene sceneID="83F-rm-JUD">
             <objects>
                 <viewController id="Qwt-QY-fbz" customClass="ProfileViewController" customModule="ImageFeed" customModuleProvider="target" sceneMemberID="viewController">
@@ -202,7 +202,7 @@
                         <viewLayoutGuide key="safeArea" id="rSe-tP-NJl"/>
                         <color key="backgroundColor" name="YP Black "/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Item" image="tab_profile_active" id="rJm-Uh-cdW"/>
+                    <tabBarItem key="tabBarItem" title="" image="tab_profile_active" id="rJm-Uh-cdW"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HeB-24-9RD" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

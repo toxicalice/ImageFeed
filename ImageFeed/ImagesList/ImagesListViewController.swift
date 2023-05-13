@@ -35,6 +35,10 @@ class ImagesListViewController: UIViewController {
            }
        }
     
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+    
 }
 
 

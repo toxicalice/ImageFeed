@@ -9,9 +9,15 @@ import Foundation
 import UIKit
 
 class ProfileViewController: UIViewController {
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        
     
     let profileImage = UIImage(systemName: "person.crop.circle.fill")
         

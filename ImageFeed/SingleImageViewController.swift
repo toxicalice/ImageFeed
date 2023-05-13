@@ -10,6 +10,10 @@ import UIKit
 
 class SingleImageViewController: UIViewController {
     
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+    
     var image: UIImage! {
         didSet {
         guard isViewLoaded else { return }
