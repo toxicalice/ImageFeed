@@ -46,7 +46,8 @@ class ProfileViewController: UIViewController {
         
         NSLayoutConstraint.activate([
             labelName.topAnchor.constraint(equalTo: uiImage.bottomAnchor, constant: 8),
-            labelName.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20)
+            labelName.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            labelName.trailingAnchor.constraint(greaterThanOrEqualTo: view.trailingAnchor, constant: 16)
         ])
         
         
@@ -60,7 +61,8 @@ class ProfileViewController: UIViewController {
         
         NSLayoutConstraint.activate([
             labelNickName.topAnchor.constraint(equalTo: labelName.bottomAnchor, constant: 8),
-            labelNickName.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20)
+            labelNickName.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            labelNickName.trailingAnchor.constraint(greaterThanOrEqualTo: view.trailingAnchor, constant: 16)
         ])
         
             
@@ -70,10 +72,12 @@ class ProfileViewController: UIViewController {
         labelText.translatesAutoresizingMaskIntoConstraints = false
         labelText.text = "Hello world"
         labelText.textColor = UIColor(named: "YP White")
+        labelText.numberOfLines = 0
         
         NSLayoutConstraint.activate([
             labelText.topAnchor.constraint(equalTo: labelNickName.bottomAnchor, constant: 8),
-            labelText.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20)
+            labelText.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            labelText.trailingAnchor.constraint(greaterThanOrEqualTo: view.trailingAnchor, constant: 16)
         ])
     
         let uiButton = UIButton.systemButton(with: UIImage(named:"exit")!, target: self, action: #selector(Self.didTapButton))
