@@ -17,6 +17,9 @@
 		003607A02A084DBE00D1B685 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 0036079F2A084DBE00D1B685 /* .gitignore */; };
 		003607A22A0BBB2A00D1B685 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 003607A12A0BBB2A00D1B685 /* ProfileViewController.swift */; };
 		0078FA652A0BF7CC00B9E52F /* SingleImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0078FA642A0BF7CC00B9E52F /* SingleImageViewController.swift */; };
+		BEDA37482A10FC870017AF31 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEDA37472A10FC870017AF31 /* Constants.swift */; };
+		BEDA374A2A111BC80017AF31 /* AuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEDA37492A111BC80017AF31 /* AuthViewController.swift */; };
+		BEDA374D2A113F190017AF31 /* WebViewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEDA374C2A113F190017AF31 /* WebViewViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +35,9 @@
 		0036079F2A084DBE00D1B685 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		003607A12A0BBB2A00D1B685 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		0078FA642A0BF7CC00B9E52F /* SingleImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleImageViewController.swift; sourceTree = "<group>"; };
+		BEDA37472A10FC870017AF31 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		BEDA37492A111BC80017AF31 /* AuthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewController.swift; sourceTree = "<group>"; };
+		BEDA374C2A113F190017AF31 /* WebViewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -65,6 +71,7 @@
 		003607672A02673E00D1B685 /* ImageFeed */ = {
 			isa = PBXGroup;
 			children = (
+				BEDA374B2A111C220017AF31 /* Auth */,
 				003607682A02673E00D1B685 /* AppDelegate.swift */,
 				0036076A2A02673E00D1B685 /* SceneDelegate.swift */,
 				003607A12A0BBB2A00D1B685 /* ProfileViewController.swift */,
@@ -74,6 +81,7 @@
 				003607712A02673F00D1B685 /* Assets.xcassets */,
 				003607732A02673F00D1B685 /* LaunchScreen.storyboard */,
 				003607762A02673F00D1B685 /* Info.plist */,
+				BEDA37472A10FC870017AF31 /* Constants.swift */,
 			);
 			path = ImageFeed;
 			sourceTree = "<group>";
@@ -85,6 +93,15 @@
 				0036076C2A02673E00D1B685 /* ImagesListViewController.swift */,
 			);
 			path = ImagesList;
+			sourceTree = "<group>";
+		};
+		BEDA374B2A111C220017AF31 /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+				BEDA37492A111BC80017AF31 /* AuthViewController.swift */,
+				BEDA374C2A113F190017AF31 /* WebViewViewController.swift */,
+			);
+			path = Auth;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -162,7 +179,10 @@
 				0036079D2A067F5F00D1B685 /* ImagesListCell.swift in Sources */,
 				003607A22A0BBB2A00D1B685 /* ProfileViewController.swift in Sources */,
 				003607692A02673E00D1B685 /* AppDelegate.swift in Sources */,
+				BEDA374A2A111BC80017AF31 /* AuthViewController.swift in Sources */,
+				BEDA37482A10FC870017AF31 /* Constants.swift in Sources */,
 				0078FA652A0BF7CC00B9E52F /* SingleImageViewController.swift in Sources */,
+				BEDA374D2A113F190017AF31 /* WebViewViewController.swift in Sources */,
 				0036076B2A02673E00D1B685 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
