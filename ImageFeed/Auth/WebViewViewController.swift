@@ -10,7 +10,7 @@ import WebKit
 
 class WebViewViewController: UIViewController {
     @IBOutlet private var webView: WKWebView!
-    @IBAction private func didTapBackButton(_ sender: Any?) { }
+    @IBAction private func didTapBackButton(_ sender: Any?) { } //TODO: кнопка назад не работает
     @IBOutlet private var progressView: UIProgressView! 
     
     var delegate: WebViewViewControllerDelegate?
@@ -32,9 +32,35 @@ class WebViewViewController: UIViewController {
         webView.load(request)
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        webView.addObserver(
+            self,
+            forKeyPath: #keyPath(WKWebView.estimatedProgress),
+            options: .new,
+            context: nil)
+        updateProgress()
+    }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        webView.removeObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress), context: nil)
+    }
     
+    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+        if keyPath == #keyPath(WKWebView.estimatedProgress) {
+            updateProgress()
+        } else {
+            super.observeValue(forKeyPath: keyPath, of: object, change: change, context: context)
+        }
+    }
+
+    private func updateProgress() {
+        progressView.progress = Float(webView.estimatedProgress)
+        progressView.isHidden = fabs(webView.estimatedProgress - 1.0) <= 0.0001
+    }
 }
+
 
 extension WebViewViewController: WKNavigationDelegate {
     
@@ -47,6 +73,18 @@ extension WebViewViewController: WKNavigationDelegate {
     ) {
          if let code = code(from: navigationAction) {
                 //TODO: process code
+             OAuth2Service().fetchAuthToken(code: code) { result in
+                 DispatchQueue.main.async {
+                     switch result {
+                     case .success(let body):
+                         let alert = UIAlertController(title: "succes", message: "access token \(body.accessToken)", preferredStyle: .actionSheet)
+                         self.present(alert, animated: true)
+                     case .failure(let error):
+                         let alert = UIAlertController(title: "failed", message: "error: \(error.localizedDescription)", preferredStyle: .actionSheet)
+                         self.present(alert, animated: true)
+                     }
+                 }
+             }
                 decisionHandler(.cancel)
           } else {
                 decisionHandler(.allow)
@@ -56,13 +94,13 @@ extension WebViewViewController: WKNavigationDelegate {
     
     private func code(from navigationAction: WKNavigationAction) -> String? {
         if
-            let url = navigationAction.request.url,                         //1
-            let urlComponents = URLComponents(string: url.absoluteString),  //2
-            urlComponents.path == "/oauth/authorize/native",                //3
-            let items = urlComponents.queryItems,                           //4
-            let codeItem = items.first(where: { $0.name == "code" })        //5
+            let url = navigationAction.request.url,
+            let urlComponents = URLComponents(string: url.absoluteString),
+            urlComponents.path == "/oauth/authorize/native",
+            let items = urlComponents.queryItems,
+            let codeItem = items.first(where: { $0.name == "code" })
         {
-            return codeItem.value                                           //6
+            return codeItem.value
         } else {
             return nil
         }
