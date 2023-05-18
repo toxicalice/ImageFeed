@@ -13,7 +13,7 @@
         <!--Tab Bar Controller-->
         <scene sceneID="6dN-8e-ZRN">
             <objects>
-                <tabBarController id="I0q-x5-f3P" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="TabBarViewController" id="I0q-x5-f3P" sceneMemberID="viewController">
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="5P1-L8-cp6">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -270,7 +270,7 @@
         <!--Navigation Controller-->
         <scene sceneID="4Lv-hG-Wyj">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="q2B-SL-Miy" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="AuthNavigationController" automaticallyAdjustsScrollViewInsets="NO" id="q2B-SL-Miy" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="pWz-Cs-3oM">
                         <rect key="frame" x="0.0" y="48" width="414" height="44"/>
@@ -344,10 +344,10 @@
             </objects>
             <point key="canvasLocation" x="-1104" y="1466"/>
         </scene>
-        <!--View Controller-->
+        <!--Splash View Controller-->
         <scene sceneID="Myo-YH-QLN">
             <objects>
-                <viewController id="olw-ND-XKj" sceneMemberID="viewController">
+                <viewController id="olw-ND-XKj" customClass="SplashViewController" customModule="ImageFeed" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="gxa-T9-q1X">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

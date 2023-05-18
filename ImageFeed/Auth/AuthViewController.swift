@@ -24,6 +24,21 @@ class AuthViewController:UIViewController, WebViewViewControllerDelegate {
     }
     
     func webViewViewController(_ vc: WebViewViewController, didAuthenticateWithCode code: String){
-        
+        OAuth2Service().fetchAuthToken(code:code, completion: { result in
+            switch result {
+            case .success(let response):
+                OAuth2TokenStorage().token = response.accessToken
+                self.switchToController(vcID: "TabBarViewController")
+            case .failure(let _):
+                break
+            }
+        } )
+    }
+    
+    private func switchToController(vcID: String) {
+        guard let window = UIApplication.shared.windows.first else { fatalError("Invalid Configuration") }
+        let viewController = UIStoryboard(name: "Main", bundle: .main)
+            .instantiateViewController(withIdentifier: vcID)
+        window.rootViewController = viewController
     }
 }

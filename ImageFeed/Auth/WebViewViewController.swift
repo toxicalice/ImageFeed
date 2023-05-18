@@ -10,7 +10,9 @@ import WebKit
 
 class WebViewViewController: UIViewController {
     @IBOutlet private var webView: WKWebView!
-    @IBAction private func didTapBackButton(_ sender: Any?) { } //TODO: кнопка назад не работает
+    @IBAction private func didTapBackButton(_ sender: Any?) {
+        delegate?.webViewViewControllerDidCancel(self)
+    }
     @IBOutlet private var progressView: UIProgressView! 
     
     var delegate: WebViewViewControllerDelegate?
@@ -64,27 +66,13 @@ class WebViewViewController: UIViewController {
 
 extension WebViewViewController: WKNavigationDelegate {
     
-    
-    
     func webView(
         _ webView: WKWebView,
         decidePolicyFor navigationAction: WKNavigationAction,
         decisionHandler: @escaping (WKNavigationActionPolicy) -> Void
     ) {
          if let code = code(from: navigationAction) {
-                //TODO: process code
-             OAuth2Service().fetchAuthToken(code: code) { result in
-                 DispatchQueue.main.async {
-                     switch result {
-                     case .success(let body):
-                         let alert = UIAlertController(title: "succes", message: "access token \(body.accessToken)", preferredStyle: .actionSheet)
-                         self.present(alert, animated: true)
-                     case .failure(let error):
-                         let alert = UIAlertController(title: "failed", message: "error: \(error.localizedDescription)", preferredStyle: .actionSheet)
-                         self.present(alert, animated: true)
-                     }
-                 }
-             }
+             delegate?.webViewViewController(self, didAuthenticateWithCode: code)
                 decisionHandler(.cancel)
           } else {
                 decisionHandler(.allow)

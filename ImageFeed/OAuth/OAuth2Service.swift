@@ -15,7 +15,7 @@ case urlSessionError
 
 final class OAuth2Service {
     
-    func fetchAuthToken (code: String, completion: @escaping ( Swift.Result<OAuthTokenResponseBody, Error> ) -> Void) {
+    func fetchAuthToken (code: String, completion: @escaping (Swift.Result<OAuthTokenResponseBody, Error>) -> Void) {
         
         
         var urlComponents = URLComponents()
@@ -41,19 +41,27 @@ final class OAuth2Service {
                     if let data = data {
                         do {
                             let bodyResponse = try JSONDecoder().decode(OAuthTokenResponseBody.self, from: data)
-                            completion(Result.success(bodyResponse))
+                            DispatchQueue.main.async {
+                                completion(Result.success(bodyResponse))
+                            }
                         }
                         catch {
-                            completion(Result.failure(error))
+                            DispatchQueue.main.async {
+                                completion(Result.failure(error))
+                            }
                         }
                     }
                 } else {
-                    completion(Result.failure(NetworkError.httpStatusCode(response.statusCode)))
+                    DispatchQueue.main.async {
+                        completion(Result.failure(NetworkError.httpStatusCode(response.statusCode)))
+                    }
                 }
             }
             
             guard let requestError = requestError else {return}
-            completion(Result.failure(NetworkError.urlRequestError(requestError)))
+            DispatchQueue.main.async {
+                completion(Result.failure(NetworkError.urlRequestError(requestError)))
+            }
             
         }
         
