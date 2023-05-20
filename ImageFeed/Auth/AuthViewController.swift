@@ -1,0 +1,41 @@
+//
+//  AuthViewController.swift
+//  ImageFeed
+//
+//  Created by toxicalIce on 14.05.2023.
+//
+
+import Foundation
+import UIKit
+
+protocol AuthViewControllerDelegate {
+   func authViewController(_ vc: AuthViewController, didAuthenticateWithCode code: String)
+}
+
+class AuthViewController:UIViewController, WebViewViewControllerDelegate {
+    let showWebViewID = "ShowWebView"
+    var delegate: AuthViewControllerDelegate?
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let webViewViewController = segue.destination as? WebViewViewController {
+            webViewViewController.delegate = self
+        } else {
+            super.prepare(for: segue, sender: sender)
+        }
+    }
+    
+    func webViewViewControllerDidCancel(_ vc: WebViewViewController) {
+        dismiss(animated: true)
+    }
+    
+    func webViewViewController(_ vc: WebViewViewController, didAuthenticateWithCode code: String){
+        delegate?.authViewController(self, didAuthenticateWithCode: code)
+    }
+    
+    private func switchToController(vcID: String) {
+        guard let window = UIApplication.shared.windows.first else { fatalError("Invalid Configuration") }
+        let viewController = UIStoryboard(name: "Main", bundle: .main)
+            .instantiateViewController(withIdentifier: vcID)
+        window.rootViewController = viewController
+    }
+}
