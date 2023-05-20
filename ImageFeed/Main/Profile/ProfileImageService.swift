@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 struct UserResult: Codable{
     let profileImage: ProfileImage
@@ -30,15 +31,18 @@ final class ProfileImageService {
     private (set) var avatarURL: String?
     private let urlSession = URLSession.shared
     
+   
+    
     func fetchProfileImageURL(username: String, _ completion: @escaping (Result<String, Error>) -> Void) {
         
-        let url = URL(string: "https://api.unsplash.com/users/\(username)")!
         
+        let url = URL(string: "https://api.unsplash.com/users/\(username)")!
+
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
         guard let accessToken: String = OAuth2TokenStorage().token else {return}
         request.addValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
-        
+
        let task = urlSession.objectTask(for: request) { (result: Swift.Result<UserResult, Error>) in
             switch (result) {
             case .success(let responseBody):

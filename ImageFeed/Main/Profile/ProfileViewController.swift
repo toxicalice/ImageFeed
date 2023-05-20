@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+import Kingfisher
 
 class ProfileViewController: UIViewController {
     
@@ -34,19 +35,22 @@ class ProfileViewController: UIViewController {
                 self.updateAvatar()
             }
         updateAvatar()
-                                                    
+        
         if let profile = profileService.profile {
             updateProfileDetails(profile: profile)
         }
     }
     
-    private func updateAvatar() {                                   // 8
-           guard
-               let profileImageURL = ProfileImageService.shared.avatarURL,
-               let url = URL(string: profileImageURL)
-           else { return }
-           // TODO [Sprint 11] Обновить аватар, используя Kingfisher
-       }
+    private func updateAvatar() {                                   
+        guard
+            let profileImageURL = ProfileImageService.shared.avatarURL,
+            let imageUrl = URL(string: profileImageURL)
+        else { return }
+        
+        
+        uiImage.kf.setImage(with: imageUrl, placeholder: UIImage(named: "placeholder.jpeg"))
+        
+    }
     
     private func updateProfileDetails(profile: Profile){
         labelName.text = profile.name
@@ -63,7 +67,10 @@ class ProfileViewController: UIViewController {
         view.addSubview(uiImage)
         uiImage.translatesAutoresizingMaskIntoConstraints = false
         uiImage.image = profileImage
+        uiImage.backgroundColor = .clear
         uiImage.tintColor = .gray
+        uiImage.layer.cornerRadius = 35
+        uiImage.layer.masksToBounds = true
         
         NSLayoutConstraint.activate([
             uiImage.widthAnchor.constraint(equalToConstant: 70),
