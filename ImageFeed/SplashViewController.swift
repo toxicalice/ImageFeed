@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class SplashViewController:UIViewController {
+class SplashViewController:UIViewController, AuthViewControllerDelegate {
     private let ShowAuthenticationScreenSegueIdentifier = "ShowAuthenticationScreen"
     private let oauth2Service = OAuth2Service()
     private let oauth2TokenStorage = OAuth2TokenStorage()
@@ -28,5 +28,23 @@ class SplashViewController:UIViewController {
         let viewController = UIStoryboard(name: "Main", bundle: .main)
             .instantiateViewController(withIdentifier: vcID)
         window.rootViewController = viewController
+        
+        if vcID == "AuthNavigationController" {
+            guard let navigationController = viewController as? UINavigationController else {return}
+            guard let viewController = navigationController.viewControllers.first as? AuthViewController else {return}
+            viewController.delegate = self
+        }
+    }
+    
+    func authViewController(_ vc: AuthViewController, didAuthenticateWithCode code: String) {
+        OAuth2Service().fetchAuthToken(code:code, completion: { result in
+            switch result {
+            case .success(let accessToken):
+                OAuth2TokenStorage().token = accessToken
+                self.switchToController(vcID: "TabBarViewController")
+            case .failure(_):
+                break
+            }
+        } )
     }
 }

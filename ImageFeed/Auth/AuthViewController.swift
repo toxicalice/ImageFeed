@@ -8,8 +8,13 @@
 import Foundation
 import UIKit
 
+protocol AuthViewControllerDelegate {
+   func authViewController(_ vc: AuthViewController, didAuthenticateWithCode code: String)
+}
+
 class AuthViewController:UIViewController, WebViewViewControllerDelegate {
     let showWebViewID = "ShowWebView"
+    var delegate: AuthViewControllerDelegate?
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let webViewViewController = segue.destination as? WebViewViewController {
@@ -24,15 +29,7 @@ class AuthViewController:UIViewController, WebViewViewControllerDelegate {
     }
     
     func webViewViewController(_ vc: WebViewViewController, didAuthenticateWithCode code: String){
-        OAuth2Service().fetchAuthToken(code:code, completion: { result in
-            switch result {
-            case .success(let response):
-                OAuth2TokenStorage().token = response.accessToken
-                self.switchToController(vcID: "TabBarViewController")
-            case .failure(let _):
-                break
-            }
-        } )
+        delegate?.authViewController(self, didAuthenticateWithCode: code)
     }
     
     private func switchToController(vcID: String) {
