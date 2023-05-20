@@ -14,14 +14,19 @@ class SplashViewController:UIViewController, AuthViewControllerDelegate {
     private let oauth2TokenStorage = OAuth2TokenStorage()
     private let profileService = ProfileService.shared
     private let profileImageService = ProfileImageService.shared
+    var uiImage:UIImageView!
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        if let token = oauth2TokenStorage.token {
+        if let _ = oauth2TokenStorage.token {
             loadProfile()
         } else {
-            switchToController(vcID: "AuthNavigationController")
+            navigateToAuth()
         }
+    }
+    
+    override func viewDidLoad() {
+        setupViews()
     }
     
     
@@ -30,12 +35,13 @@ class SplashViewController:UIViewController, AuthViewControllerDelegate {
         let viewController = UIStoryboard(name: "Main", bundle: .main)
             .instantiateViewController(withIdentifier: vcID)
         window.rootViewController = viewController
-        
-        if vcID == "AuthNavigationController" {
-            guard let navigationController = viewController as? UINavigationController else {return}
-            guard let viewController = navigationController.viewControllers.first as? AuthViewController else {return}
-            viewController.delegate = self
-        }
+    }
+    
+    private func navigateToAuth() {
+        let vc = AuthViewController()
+        vc.delegate = self
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: true)
     }
     
     func authViewController(_ vc: AuthViewController, didAuthenticateWithCode code: String) {
@@ -80,6 +86,26 @@ class SplashViewController:UIViewController, AuthViewControllerDelegate {
         self.present(alert, animated: true)
     }
     
+    
+    private func setupViews() {
+        
+        let logoImage = UIImage(named: "logoYP")
+        
+        uiImage = UIImageView()
+        
+        view.addSubview(uiImage)
+        uiImage.translatesAutoresizingMaskIntoConstraints = false
+        uiImage.image = logoImage
+        
+        NSLayoutConstraint.activate([
+            uiImage.widthAnchor.constraint(equalToConstant: 75),
+            uiImage.heightAnchor.constraint(equalToConstant: 76),
+            uiImage.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor, constant: 0),
+            uiImage.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor, constant: 0)
+        ])
+        
+        self.view.backgroundColor = UIColor(named: "YP Black")
+        
+    }
 }
-
 
