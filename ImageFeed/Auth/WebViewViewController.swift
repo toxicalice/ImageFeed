@@ -19,7 +19,7 @@ class WebViewViewController: UIViewController {
     
     override func viewDidLoad() {
            super.viewDidLoad()
-        var urlComponents = URLComponents(string: defaultBaseURL.absoluteString)!
+        var urlComponents = URLComponents(string: defaultOAuthBaseURL.absoluteString)!
         urlComponents.queryItems = [
            URLQueryItem(name: "client_id", value: accessKey),
            URLQueryItem(name: "redirect_uri", value: redirectURI),

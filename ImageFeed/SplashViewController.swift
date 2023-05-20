@@ -12,16 +12,39 @@ class SplashViewController:UIViewController, AuthViewControllerDelegate {
     private let ShowAuthenticationScreenSegueIdentifier = "ShowAuthenticationScreen"
     private let oauth2Service = OAuth2Service()
     private let oauth2TokenStorage = OAuth2TokenStorage()
+    private let profileService = ProfileService.shared
+    private let profileImageService = ProfileImageService.shared
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
+        UIBlockingProgressHUD.show()
         if let token = oauth2TokenStorage.token {
-            switchToController(vcID: "TabBarViewController")
+            profileService.fetchProfile() { result in
+                switch(result) {
+                case .success(let profile):
+                    self.profileImageService.fetchProfileImageURL(username: profile.username) { result in
+                        switch (result) {
+                        case .success(_):
+                            break
+                        case .failure(_):
+                            break
+                        }
+                    }
+                    UIBlockingProgressHUD.dismiss()
+                    self.switchToController(vcID: "TabBarViewController")
+                case .failure(let error):
+                    UIBlockingProgressHUD.dismiss()
+                    let alert = UIAlertController(title: "Что-то пошло не так(", message: error.localizedDescription, preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "OK", style: .default))
+                    self.present(alert, animated: true)
+                }
+            }
+            
         } else {
             switchToController(vcID: "AuthNavigationController")
         }
     }
+    
     
     private func switchToController(vcID: String) {
         guard let window = UIApplication.shared.windows.first else { fatalError("Invalid Configuration") }
@@ -37,14 +60,24 @@ class SplashViewController:UIViewController, AuthViewControllerDelegate {
     }
     
     func authViewController(_ vc: AuthViewController, didAuthenticateWithCode code: String) {
+        UIBlockingProgressHUD.show()
         OAuth2Service().fetchAuthToken(code:code, completion: { result in
-            switch result {
-            case .success(let accessToken):
-                OAuth2TokenStorage().token = accessToken
-                self.switchToController(vcID: "TabBarViewController")
-            case .failure(_):
-                break
+            self.profileService.fetchProfile() { result in
+                switch(result) {
+                case .success(_):
+                    UIBlockingProgressHUD.dismiss()
+                    self.switchToController(vcID: "TabBarViewController")
+                    
+                case .failure(let error):
+                    UIBlockingProgressHUD.dismiss()
+                    let alert = UIAlertController(title: "Что-то пошло не так(", message: error.localizedDescription, preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "OK", style: .default))
+                    self.present(alert, animated: true)
+                }
             }
         } )
     }
+    
 }
+
+
