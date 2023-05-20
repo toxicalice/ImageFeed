@@ -160,7 +160,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MCE-e0-cj6">
-                                <rect key="frame" x="24" y="56" width="48" height="48"/>
+                                <rect key="frame" x="24" y="8" width="48" height="48"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="48" id="Ulp-6g-vCm"/>
                                     <constraint firstAttribute="height" constant="48" id="mFE-EI-8dL"/>
@@ -347,7 +347,7 @@
         <!--Splash View Controller-->
         <scene sceneID="Myo-YH-QLN">
             <objects>
-                <viewController id="olw-ND-XKj" customClass="SplashViewController" customModule="ImageFeed" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SplashViewController" id="olw-ND-XKj" customClass="SplashViewController" customModule="ImageFeed" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="gxa-T9-q1X">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

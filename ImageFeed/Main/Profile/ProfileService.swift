@@ -18,44 +18,22 @@ final class ProfileService {
         
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
-        guard let accessToken: String = OAuth2TokenStorage().token else {return}
+        guard let accessToken: String = OAuth2TokenStorage().token else {
+            completion(.failure(NSError()))
+            return
+        }
         request.addValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
         
         
-        let task = urlSession.dataTask(with: request) { data, response, requestError in
-            
-            if let response = response as? HTTPURLResponse {
-                if  200 ..< 300 ~= response.statusCode {
-                    if let data = data {
-                        do {
-                            let bodyResponse = try JSONDecoder().decode(ProfileResult.self, from: data)
-                            DispatchQueue.main.async {
-                                self.profile = bodyResponse.toProfile()
-                                completion(Result.success(bodyResponse.toProfile()))
-                                
-                            }
-                        }
-                        catch {
-                            DispatchQueue.main.async {
-                                completion(Result.failure(error))
-                                
-                            }
-                        }
-                    }
-                } else {
-                    DispatchQueue.main.async {
-                        completion(Result.failure(NetworkError.httpStatusCode(response.statusCode)))
-                    }
-                }
-            }
-            
-            guard let requestError = requestError else {return}
-            DispatchQueue.main.async {
-                completion(Result.failure(NetworkError.urlRequestError(requestError)))
-            }
-            
-        }
-        task.resume()
-        
+        let task = urlSession.objectTask(for: request) { (result: Swift.Result<ProfileResult, Error>) in
+             switch (result) {
+             case .success(let responseBody):
+                 self.profile = responseBody.toProfile()
+                 completion(.success(responseBody.toProfile()))
+             case .failure(let error):
+                 completion(.failure(error))
+             }
+         }
+         task.resume()
     }
 }

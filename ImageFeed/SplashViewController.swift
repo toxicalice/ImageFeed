@@ -17,29 +17,8 @@ class SplashViewController:UIViewController, AuthViewControllerDelegate {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        UIBlockingProgressHUD.show()
         if let token = oauth2TokenStorage.token {
-            profileService.fetchProfile() { result in
-                switch(result) {
-                case .success(let profile):
-                    self.profileImageService.fetchProfileImageURL(username: profile.username) { result in
-                        switch (result) {
-                        case .success(_):
-                            break
-                        case .failure(_):
-                            break
-                        }
-                    }
-                    UIBlockingProgressHUD.dismiss()
-                    self.switchToController(vcID: "TabBarViewController")
-                case .failure(let error):
-                    UIBlockingProgressHUD.dismiss()
-                    let alert = UIAlertController(title: "Что-то пошло не так(", message: error.localizedDescription, preferredStyle: .alert)
-                    alert.addAction(UIAlertAction(title: "OK", style: .default))
-                    self.present(alert, animated: true)
-                }
-            }
-            
+            loadProfile()
         } else {
             switchToController(vcID: "AuthNavigationController")
         }
@@ -62,20 +41,43 @@ class SplashViewController:UIViewController, AuthViewControllerDelegate {
     func authViewController(_ vc: AuthViewController, didAuthenticateWithCode code: String) {
         UIBlockingProgressHUD.show()
         OAuth2Service().fetchAuthToken(code:code, completion: { result in
-            self.profileService.fetchProfile() { result in
-                switch(result) {
-                case .success(_):
-                    UIBlockingProgressHUD.dismiss()
-                    self.switchToController(vcID: "TabBarViewController")
-                    
-                case .failure(let error):
-                    UIBlockingProgressHUD.dismiss()
-                    let alert = UIAlertController(title: "Что-то пошло не так(", message: error.localizedDescription, preferredStyle: .alert)
-                    alert.addAction(UIAlertAction(title: "OK", style: .default))
-                    self.present(alert, animated: true)
-                }
+            switch (result) {
+            case .success(_):
+                self.loadProfile()
+            case .failure(let error):
+                self.showError(error: error)
             }
-        } )
+        })
+        
+        
+    }
+    
+    func loadProfile(){
+        UIBlockingProgressHUD.show()
+        profileService.fetchProfile() { result in
+            switch(result) {
+            case .success(let profile):
+                self.profileImageService.fetchProfileImageURL(username: profile.username) { result in
+                    switch (result) {
+                    case .success(_):
+                        break
+                    case .failure(_):
+                        break
+                    }
+                }
+                UIBlockingProgressHUD.dismiss()
+                self.switchToController(vcID: "TabBarViewController")
+            case .failure(let error):
+                self.showError(error: error)
+            }
+        }
+    }
+    
+    func showError(error: Error){
+        UIBlockingProgressHUD.dismiss()
+        let alert = UIAlertController(title: "Что-то пошло не так(", message: error.localizedDescription, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default))
+        self.present(alert, animated: true)
     }
     
 }

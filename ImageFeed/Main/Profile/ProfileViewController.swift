@@ -139,7 +139,7 @@ class ProfileViewController: UIViewController {
         alert.addAction(UIAlertAction(title: "Нет", style: .cancel))
         alert.addAction(UIAlertAction(title: "Да", style: .default, handler: { close in
             OAuth2TokenStorage().token = nil
-            self.switchToController(vcID: "AuthNavigationController")
+            self.switchToController(vcID: "SplashViewController")
         }))
         self.present(alert, animated: true)
         
