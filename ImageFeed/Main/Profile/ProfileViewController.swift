@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import WebKit
 import UIKit
 import Kingfisher
 
@@ -145,10 +146,20 @@ class ProfileViewController: UIViewController {
         let alert = UIAlertController(title: "Пока кай", message: "Уверены что хотите выйти?", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Нет", style: .cancel))
         alert.addAction(UIAlertAction(title: "Да", style: .default, handler: { close in
-            OAuth2TokenStorage().token = nil
+            self.cleanStorages()
             self.switchToSplash()
         }))
         self.present(alert, animated: true)
+    }
+    
+    private func cleanStorages() {
+        OAuth2TokenStorage().token = nil
+        HTTPCookieStorage.shared.removeCookies(since: Date.distantPast)
+        WKWebsiteDataStore.default().fetchDataRecords(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes()) { records in
+           records.forEach { record in
+              WKWebsiteDataStore.default().removeData(ofTypes: record.dataTypes, for: [record], completionHandler: {})
+           }
+        }
     }
     
     private func switchToSplash() {

@@ -7,6 +7,8 @@
 
 import Foundation
 
+struct VoidStruct: Decodable {}
+
 extension URLSession {
     func objectTask<T: Decodable>(
         for request: URLRequest,
