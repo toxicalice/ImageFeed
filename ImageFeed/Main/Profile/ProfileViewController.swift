@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+import Kingfisher
 
 class ProfileViewController: UIViewController {
     
@@ -14,19 +15,62 @@ class ProfileViewController: UIViewController {
         return .lightContent
     }
     
+    var uiImage:UIImageView!
+    var labelName:UILabel!
+    var labelNickName:UILabel!
+    var labelText:UILabel!
+    private let profileService = ProfileService.shared
+    private var profileImageServiceObserver: NSObjectProtocol?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        setupViews()
+        profileImageServiceObserver = NotificationCenter.default
+            .addObserver(
+                forName: ProfileImageService.DidChangeNotification,
+                object: nil,
+                queue: .main
+            ) { [weak self] _ in
+                guard let self = self else { return }
+                self.updateAvatar()
+            }
+        updateAvatar()
         
+        if let profile = profileService.profile {
+            updateProfileDetails(profile: profile)
+        }
+    }
     
-    let profileImage = UIImage(systemName: "person.crop.circle.fill")
+    private func updateAvatar() {                                   
+        guard
+            let profileImageURL = ProfileImageService.shared.avatarURL,
+            let imageUrl = URL(string: profileImageURL)
+        else { return }
         
-    let uiImage = UIImageView()
+        
+        uiImage.kf.setImage(with: imageUrl, placeholder: UIImage(named: "placeholder.jpeg"))
+        
+    }
+    
+    private func updateProfileDetails(profile: Profile){
+        labelName.text = profile.name
+        labelNickName.text = profile.loginName
+        labelText.text = profile.bio
+    }
+    
+    private func setupViews() {
+        
+        let profileImage = UIImage(systemName: "person.crop.circle.fill")
+        
+        uiImage = UIImageView()
         
         view.addSubview(uiImage)
         uiImage.translatesAutoresizingMaskIntoConstraints = false
         uiImage.image = profileImage
+        uiImage.backgroundColor = .clear
         uiImage.tintColor = .gray
+        uiImage.layer.cornerRadius = 35
+        uiImage.layer.masksToBounds = true
         
         NSLayoutConstraint.activate([
             uiImage.widthAnchor.constraint(equalToConstant: 70),
@@ -36,7 +80,7 @@ class ProfileViewController: UIViewController {
         ])
         
         
-    let labelName = UILabel()
+        labelName = UILabel()
         
         view.addSubview(labelName)
         labelName.translatesAutoresizingMaskIntoConstraints = false
@@ -52,8 +96,8 @@ class ProfileViewController: UIViewController {
         
         
         
-    let labelNickName = UILabel()
-            
+        labelNickName = UILabel()
+        
         view.addSubview(labelNickName)
         labelNickName.translatesAutoresizingMaskIntoConstraints = false
         labelNickName.text = "@ekaterina_nov"
@@ -65,9 +109,9 @@ class ProfileViewController: UIViewController {
             labelNickName.trailingAnchor.constraint(greaterThanOrEqualTo: view.trailingAnchor, constant: 16)
         ])
         
-            
-    let labelText = UILabel()
-                
+        
+        labelText = UILabel()
+        
         view.addSubview(labelText)
         labelText.translatesAutoresizingMaskIntoConstraints = false
         labelText.text = "Hello world"
@@ -79,7 +123,7 @@ class ProfileViewController: UIViewController {
             labelText.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             labelText.trailingAnchor.constraint(greaterThanOrEqualTo: view.trailingAnchor, constant: 16)
         ])
-    
+        
         let uiButton = UIButton.systemButton(with: UIImage(named:"exit")!, target: self, action: #selector(Self.didTapButton))
         
         view.addSubview(uiButton)
@@ -98,6 +142,18 @@ class ProfileViewController: UIViewController {
     @objc
     private func didTapButton() {
         
+        let alert = UIAlertController(title: "Пока кай", message: "Уверены что хотите выйти?", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Нет", style: .cancel))
+        alert.addAction(UIAlertAction(title: "Да", style: .default, handler: { close in
+            OAuth2TokenStorage().token = nil
+            self.switchToSplash()
+        }))
+        self.present(alert, animated: true)
     }
     
+    private func switchToSplash() {
+        guard let window = UIApplication.shared.windows.first else { fatalError("Invalid Configuration") }
+        let viewController = SplashViewController()
+        window.rootViewController = viewController
+    }
 }
