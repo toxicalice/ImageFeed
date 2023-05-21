@@ -10,7 +10,7 @@ import Foundation
 struct ProfileResult: Codable {
     let username: String
     let firstName: String
-    let lastName: String
+    let lastName: String?
     let bio: String?
     
     enum CodingKeys: String, CodingKey{
@@ -22,7 +22,7 @@ struct ProfileResult: Codable {
     
     func toProfile () -> Profile {
         return Profile(username: username,
-                       name:firstName + " " + lastName,
+                       name:firstName + " " + (lastName ?? ""),
                        loginName: "@" + username,
                        bio: bio ?? "bio")
     }
