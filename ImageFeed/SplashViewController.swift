@@ -38,7 +38,8 @@ class SplashViewController:UIViewController, AuthViewControllerDelegate {
     }
     
     private func navigateToAuth() {
-        let vc = AuthViewController()
+        guard let vc = UIStoryboard(name: "Main", bundle: .main)
+            .instantiateViewController(withIdentifier: "AuthViewController") as? AuthViewController else { return }
         vc.delegate = self
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true)
@@ -105,7 +106,6 @@ class SplashViewController:UIViewController, AuthViewControllerDelegate {
         ])
         
         self.view.backgroundColor = UIColor(named: "YP Black")
-        
     }
 }
 

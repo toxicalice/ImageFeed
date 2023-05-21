@@ -146,17 +146,14 @@ class ProfileViewController: UIViewController {
         alert.addAction(UIAlertAction(title: "Нет", style: .cancel))
         alert.addAction(UIAlertAction(title: "Да", style: .default, handler: { close in
             OAuth2TokenStorage().token = nil
-            self.switchToController(vcID: "SplashViewController")
+            self.switchToSplash()
         }))
         self.present(alert, animated: true)
-        
-        
-        
     }
-    private func switchToController(vcID: String) {
+    
+    private func switchToSplash() {
         guard let window = UIApplication.shared.windows.first else { fatalError("Invalid Configuration") }
-        let viewController = UIStoryboard(name: "Main", bundle: .main)
-            .instantiateViewController(withIdentifier: vcID)
+        let viewController = SplashViewController()
         window.rootViewController = viewController
     }
 }
