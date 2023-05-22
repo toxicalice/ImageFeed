@@ -138,6 +138,8 @@ class ProfileViewController: UIViewController {
             uiButton.heightAnchor.constraint(equalToConstant: 44)
         ])
         
+        uiButton.accessibilityIdentifier = "logoutButton"
+        
     }
     
     @objc
