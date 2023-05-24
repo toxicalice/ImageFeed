@@ -22,7 +22,7 @@ final class ImageFeedUITests: XCTestCase {
     }
 
     func testAuth() throws {
-        app.buttons["Authenticate"].tap()
+        app.buttons["Войти"].tap()
         
         let webView = app.webViews["UnsplashWebView"]
         XCTAssertTrue(webView.waitForExistence(timeout: 2))
@@ -31,8 +31,9 @@ final class ImageFeedUITests: XCTestCase {
         XCTAssertTrue(webView.waitForExistence(timeout: 4))
         loginTextField.tap()
         loginTextField.typeText(login)
+        dismissKeyboardIfPresent()
         webView.swipeUp()
-        
+
         let passwordTextField = webView.descendants(matching: .secureTextField).element
         XCTAssertTrue(webView.waitForExistence(timeout: 4))
         passwordTextField.tap()
@@ -81,9 +82,20 @@ final class ImageFeedUITests: XCTestCase {
         
         app.buttons["logoutButton"].tap()
         
-        app.alerts["Пока кай!"].scrollViews.otherElements.buttons["Да"].tap()
+        app.alerts["Пока кай"].scrollViews.otherElements.buttons["Да"].tap()
         sleep(2)
         
-        let authButton = app.buttons["Authenticate"]
+        let authButton = app.buttons["Войти"]
         XCTAssertTrue(authButton.waitForExistence(timeout: 5))
-    }}
+    }
+    
+    func dismissKeyboardIfPresent() {
+        if app.keyboards.element(boundBy: 0).exists {
+            if UIDevice.current.userInterfaceIdiom == .pad {
+                app.keyboards.buttons["Hide keyboard"].tap()
+            } else {
+                app.toolbars.buttons["Done"].tap()
+            }
+        }
+    }
+}
